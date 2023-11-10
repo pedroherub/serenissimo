@@ -1,0 +1,351 @@
+project ka107 "KA107-UAH"  2018-02-12-0:00-+0100 +12m {
+  now 2018-03-31
+}
+
+resource dev1 "phernandez"
+#resource dev1 "dev1"
+#resource dev1 "dev1"
+
+# This example uses a very simple WBS that groups tasks by sprint. For
+# larger projects, a classical WBS that breaks tasks into smaller
+# tasks and so on is probably more appropriate. The reports can then
+# select the sprint context by date.
+task product "Product" {
+  task s1 "Sprint 1 [Software design]" {
+    task t1 "Application design" {
+      effort 3d
+      allocate dev1
+    }
+    task t2 "Project scheduling" {
+      effort 1d
+      allocate dev1
+    }
+    task t3 "SCRUM planning" {
+      effort 1d
+      allocate dev1
+      depends !t2
+    }
+  }
+  task s2 "Sprint 2 [Database design]" {
+    depends !s1
+    task t1 "Configuration MySQL" {
+      effort 1d
+      allocate dev1
+    }
+    task t2 "[DOC] Database layout (scheme)" {
+      effort 2d
+      allocate dev1
+      depends !t1
+    }
+    task t3 "Database creation (server)" {
+      effort 2d
+      allocate dev1
+      depends !t2
+    }
+  }
+  task s3 "Sprint 3 [Django Framework - Admin]" {
+    depends !s2
+    task t1 "Admin backend configuration" {
+      effort 5d
+      allocate dev1
+    }
+  }
+  task s4 "Sprint 4 [Django Framework - Accounts]" {
+    depends !s3
+    task t1 "Accounts module" {
+      effort 1d
+      allocate dev1
+    }
+    task t2 "Profiles structure" {
+      effort 2d
+      allocate dev1
+      depends !t1
+    }
+    task t3 "Authentication & Authorization" {
+      effort 2d
+      allocate dev1
+      depends !t2
+    }
+  }
+  task s5 "Sprint 5 [Django REST API Participants]" {
+    depends !s4
+    task t1 "Defining resources" {
+      effort 1d
+      allocate dev1
+    }
+    task t2 "Defining data (JSON)" {
+      effort 1d
+      allocate dev1
+    }
+    task t3 "Developing API output" {
+      effort 3d
+      allocate dev1
+    }
+  }
+  task s6 "Sprint 6 [UI - Datatables configuration]" {
+    depends !s5
+    task t1 "Setting up data table consuming from API REST" {
+      effort 5d
+      allocate dev1
+    }
+  }
+  task s7 "Sprint 7 [UI - CRUD for Datatables]" {
+    depends !s6
+    task t1 "Registering new participants" {
+      effort 2d
+      allocate dev1
+    }
+    task t2 "Updating participants" {
+      effort 2d
+      allocate dev1
+    }
+    task t3 "Deleting participants" {
+      effort 1d
+      allocate dev1
+    }
+  }
+  task s8 "Sprint 8 [Email manager - Messaging system]" {
+    depends !s7
+    task t1 "Developing an email manager" {
+      effort 5d
+      allocate dev1
+    }
+  }
+  task s9 "Sprint 9 [I/O data documents]" {
+    depends !s8
+    task t1 "Interoperability - Importing CSV format" {
+      effort 2d
+      allocate dev1
+    }
+    task t2 "Interoperability - Exporting CSV format" {
+      effort 1d
+      allocate dev1
+    }
+    task t3 "Exporting Excel format" {
+      effort 1d
+      allocate dev1
+    }
+    task t4 "Exporting PDF report" {
+      effort 1d
+      allocate dev1
+    }
+  }  
+  task s10 "Sprint 10 [Uploading mobility documents]" {
+    depends !s9
+    task t1 "Managing participants documents online" {
+      effort 5d
+      allocate dev1
+    }
+  }
+  task s11 "Sprint 11 [Generating mobility documents automatically]" {
+    depends !s10
+    task t1 "Creating templates (Microsoft XML)" {
+      effort 2d
+      allocate dev1
+    }
+    task t2 "Processing documents automatically" {
+      effort 3d
+      allocate dev1
+    }
+  }  
+  task s12 "Sprint 12 [Payment manager - SOROLLA system]" {
+    depends !s11
+    task t1 "Defining communication with SOROLLA payment system" {
+      effort 2d
+      allocate dev1
+    }
+    task t2 "Performing order payments automatically" {
+      effort 3d
+      allocate dev1
+      depends !t1
+    }
+  }
+  task s13 "Sprint 13 [Angular frontend integration]" {
+    depends !s12
+    task t1 "Angular integration" {
+      effort 5d
+      allocate dev1
+    }
+  }
+  task s14 "Sprint 14 [Angular datatables integration]" {
+    depends !s13
+    task t1 "Integrating datatables with Angular" {
+      effort 5d
+      allocate dev1
+    }
+  }
+  task s15 "Sprint 15 [Unit testing]" {
+    depends !s14
+    task t1 "Django testing" {
+      effort 2d
+      allocate dev1
+    }
+    task t2 "Django REST testing" {
+      effort 2d
+      allocate dev1
+      depends !t1
+    }
+    task t3 "Angular testing" {
+      effort 1d
+      allocate dev1
+      depends !t2
+    }
+  }
+  task s16 "Sprint 16 [Integration testing]" {
+    depends !s15
+    task t1 "Server deployment" {
+      effort 2d
+      allocate dev1
+      depends product.s1.t2
+    }
+    task t2 "Production testing" {
+      effort 3d
+      allocate dev1
+      depends !t1
+    }
+  }
+}
+
+navigator menu
+
+textreport "" {
+  header -8<-
+    == Scrum Ecoembes Gamification ==
+    <[navigator id='menu']>
+    ->8-
+  formats html
+
+  textreport "" {
+    columns name, status, effort, start, end, resources
+
+    taskreport "Product Backlog" {
+    }
+    taskreport "Sprint 1 Backlog" {
+      taskroot product.s1
+    }
+    taskreport "Sprint 2 Backlog" {
+      taskroot product.s2
+    }
+    taskreport "Sprint 3 Backlog" {
+      taskroot product.s3
+    }
+    taskreport "Sprint 4 Backlog" {
+      taskroot product.s4
+    }
+    taskreport "Sprint 5 Backlog" {
+      taskroot product.s5
+    }
+    taskreport "Sprint 6 Backlog" {
+      taskroot product.s6
+    }
+    taskreport "Sprint 7 Backlog" {
+      taskroot product.s7
+    }
+    taskreport "Sprint 8 Backlog" {
+      taskroot product.s8
+    }
+    taskreport "Sprint 9 Backlog" {
+      taskroot product.s9
+    }
+    taskreport "Sprint 10 Backlog" {
+      taskroot product.s10
+    }
+    taskreport "Sprint 11 Backlog" {
+      taskroot product.s11
+    }
+    taskreport "Sprint 12 Backlog" {
+      taskroot product.s12
+    }
+    taskreport "Sprint 13 Backlog" {
+      taskroot product.s13
+    }
+    taskreport "Sprint 14 Backlog" {
+      taskroot product.s14
+    }
+    taskreport "Sprint 15 Backlog" {
+      taskroot product.s15
+    }
+    taskreport "Sprint 16 Backlog" {
+      taskroot product.s16
+    }
+    title "Backlogs"
+    purge formats
+  }
+
+  textreport "" {
+    sorttasks id.up
+    width 800
+    tracereport "Product Burndown" {
+      columns opentasks
+      hidetask plan.id != "product"
+    }
+    tracereport "Sprint 1 Burndown" {
+      columns opentasks
+      hidetask plan.id != "product.s1"
+    }
+    tracereport "Sprint 2 Burndown" {
+      columns opentasks
+      hidetask plan.id != "product.s2"
+    }
+    tracereport "Sprint 3 Burndown" {
+      columns opentasks
+      hidetask plan.id != "product.s3"
+    }
+    tracereport "Sprint 4 Burndown" {
+      columns opentasks
+      hidetask plan.id != "product.s4"
+    }
+    tracereport "Sprint 5 Burndown" {
+      columns opentasks
+      hidetask plan.id != "product.s5"
+    }
+    tracereport "Sprint 6 Burndown" {
+      columns opentasks
+      hidetask plan.id != "product.s6"
+    }
+    tracereport "Sprint 7 Burndown" {
+      columns opentasks
+      hidetask plan.id != "product.s7"
+    }
+    tracereport "Sprint 8 Burndown" {
+      columns opentasks
+      hidetask plan.id != "product.s8"
+    }
+    tracereport "Sprint 9 Burndown" {
+      columns opentasks
+      hidetask plan.id != "product.s9"
+    }
+    tracereport "Sprint 10 Burndown" {
+      columns opentasks
+      hidetask plan.id != "product.s10"
+    }
+    tracereport "Sprint 11 Burndown" {
+      columns opentasks
+      hidetask plan.id != "product.s11"
+    }
+    tracereport "Sprint 12 Burndown" {
+      columns opentasks
+      hidetask plan.id != "product.s12"
+    }
+    tracereport "Sprint 13 Burndown" {
+      columns opentasks
+      hidetask plan.id != "product.s13"
+    }
+    tracereport "Sprint 14 Burndown" {
+      columns opentasks
+      hidetask plan.id != "product.s14"
+    }
+    tracereport "Sprint 15 Burndown" {
+      columns opentasks
+      hidetask plan.id != "product.s15"
+    }
+    tracereport "Sprint 16 Burndown" {
+      columns opentasks
+      hidetask plan.id != "product.s16"
+    }
+    title "Burndown Charts"
+    purge formats
+  }
+
+  purge formats
+}

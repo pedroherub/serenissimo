@@ -3,7 +3,7 @@
  * TaskJuggler project management tool. You can use this as a basis to
  * start your own project file.
  */
-project thesis "Thesis dissertation"  2023-10-23-0:00-+0200 +30m {
+project thesis "EYE exchange"  2023-10-30-0:00-+0200 +30m {
   # Set the default time zone for the project. If not specified, UTC
   # is used.
   timezone "Europe/Rome"
@@ -95,13 +95,13 @@ rate 400.0
 #  resource r3 "Resource 3"
 #}
 
-resource boss "Luis de Marcos" {
-  email "luis.demarcos@uah.es"
+resource boss "(HE) Elena Finco" {
+  email "info@finking.it"
   rate 480
 }
-resource dev "PhD students" {
+resource dev "(NE) Pedro Hernandez" {
   managers boss
-  resource dev1 "Pedro Hernández" {
+  resource dev1 "Pedro Hernandez" {
     email "pedro.hernandezr@edu.uah.es"
     rate 350.0
   }
@@ -114,63 +114,63 @@ resource s1 "System 1" {
 }
 
 task project "Schedule" {
-  task wp1 "Work proposal (updating)" {
-  	start 2023-10-23
-  	#allocate dev1
+  task wp1 "Commitment plan (updating)" {
+    start 2023-10-30
+    #allocate dev1
     task t1 "Setting up exchange" {
-    	duration 2w
+      duration 2w
     }
     #task t2 "Formulate research questions" {
-    #	duration 3m
+    # duration 3m
     #}
     #task t3 "Literature review" {
-    #	duration 3m
+    # duration 3m
     #}
     #task t4 "Formulate research strategy, research design and select methods" {
-    #	duration 3m
+    # duration 3m
     #}
     #task t5 "Write research proposal (final version)" {
-    #	duration 3m
+    # duration 3m
     #}
   }
   #task wp2 "Cotutorship agreement? (Spanish university)" {
-  #	start 2024-04-01
-  # 	#allocate dev
+  # start 2024-04-01
+  #   #allocate dev
   #  task t1 "Documentation" {
-  #  	duration 3m
+  #   duration 3m
   #  }
   #}
   #task wp3 "Literature review" {
-  #	start 2020-03-01
+  # start 2020-03-01
   #  #allocate dev1
   #  task t1 "Deeper state-of-the-art research on topic" {
-  #  	duration 6m
+  #   duration 6m
   #  }
   #}
   task wp2 "1st project (loyalty program)" {
-  	start 2023-11-06
+    start 2023-11-13
     #depends !wp2
     allocate dev1
     task t1 "Development" {
-    	duration 4w
+      duration 4w
     }
   }
   task ms1 "Loyalty program deployment" {
       depends !wp2
   }
   task wp3 "2nd project (AI model)" {
-  	start 2023-12-04
+    start 2023-12-11
     #depends !wp3
     allocate dev1
     task t1 "Development" {
-    	duration 12w
+      duration 12w
     }
   }
   task ms2 "AI model deployment" {
       depends !wp3
   }
   #task wp4 "Interruption?" {
-  #  start 2024-02-26
+  #  start 2024-03-04
   #  #depends !wp4
   #  allocate dev1
   #  task t1 "Development" {
@@ -186,11 +186,11 @@ task project "Schedule" {
   #  }
   #}
   task wp4 "3rd project (credentials verification)" {
-  	start 2024-02-26
+    start 2024-03-04
     #depends !wp4
     allocate dev1
     task t1 "Development" {
-    	duration 8w
+      duration 8w
     }
   }
   task ms3 "Credentials verification deployment" {
@@ -228,18 +228,38 @@ task project "Schedule" {
       start 2024-02-15
       duration 1d
     }
+    task "Report 8" {
+      start 2024-03-01
+      duration 1d
+    }
+    task "Report 9" {
+      start 2024-03-15
+      duration 1d
+    }
+    task "Report 10" {
+      start 2024-03-30
+      duration 1d
+    }
+    task "Report 11" {
+      start 2024-04-15
+      duration 1d
+    }
+    task "Report 12 (final)" {
+      start 2024-04-30
+      duration 1d
+    }
  }
  task artifacts "EYE outcomes" {
     task "Marketing plan" {
-      start 2023-11-06
+      start 2023-11-13
       duration 8w
     }
     task "EU AI Act & GDPR (presentation)" {
-      start 2024-01-01
+      start 2024-01-08
       duration 8w
     }
     task "Business plan" {
-      start 2024-02-26
+      start 2024-03-04
       duration 8w
     }
  }
@@ -349,8 +369,8 @@ taskreport overview "" {
           name, start, end, 
           #effort, cost, revenue, 
           chart { 
-          	${TaskTip} 
-          	scale month
+            ${TaskTip} 
+            scale month
           }
   # For this report we like to have the abbreviated weekday in front
   # of the date. %a is the tag for this.
